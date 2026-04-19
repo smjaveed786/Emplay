@@ -1,4 +1,4 @@
-# 🚀 AI Prompt Library (Full Stack)
+# 🚀 Promptly (Full Stack)
 
 A professional, high-performance platform for managing and tracking AI prompts. Built with a robust **Django** backend, a premium **Angular** frontend, and real-time **Redis** analytics.
 

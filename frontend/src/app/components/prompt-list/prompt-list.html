@@ -1,28 +1,66 @@
-<div class="container">
-  <div class="header-actions">
-    <h2>AI Prompt Library</h2>
-    <a routerLink="/add-prompt" class="btn-add">Add New Prompt</a>
-  </div>
-  
-  <div class="prompt-grid">
-    <div *ngFor="let prompt of prompts()" class="prompt-card" [routerLink]="['/prompts', prompt.id]">
-      <div class="card-header">
-        <h3>{{ prompt.title }}</h3>
-        <span class="badge" [ngClass]="'complexity-' + prompt.complexity">Lvl {{ prompt.complexity }}</span>
-      </div>
-      
-      <div class="tags-row" *ngIf="prompt.tags && prompt.tags.length > 0">
-        <span *ngFor="let tag of prompt.tags" class="tag-pill" [style.background-color]="tag.color">
-          {{ tag.name }}
-        </span>
-      </div>
+<div class="prompts-container">
+  <!-- Top Action Header -->
+  <div class="action-header">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Search prompts..." (input)="onSearch($event)" />
+    </div>
 
-      <p>{{ prompt.content | slice:0:100 }}{{ prompt.content.length > 100 ? '...' : '' }}</p>
+    <div class="filter-actions">
+      <select class="filter-select" (change)="onFilterChange($event)">
+        <option value="newest">Newest First</option>
+        <option value="popular">Most Popular</option>
+        <option value="complexity">Complexity</option>
+      </select>
       
-      <div class="stats">
-        <span>Views: {{ prompt.view_count || 0 }}</span>
-        <span>{{ prompt.created_at | date }}</span>
+      <a routerLink="/add-prompt" class="btn-create-gradient">
+        <span class="plus">＋</span>
+        <span>Add New Prompt</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Prompt Grid -->
+  <div class="prompt-grid">
+    <div *ngFor="let prompt of filteredPrompts()" class="prompt-card" [routerLink]="['/prompts', prompt.id]">
+      <div class="card-inner">
+        <div class="card-main">
+          <div class="card-header">
+            <h3 class="card-title">{{ prompt.title }}</h3>
+            <div class="lvl-badge" [ngClass]="'lvl-' + prompt.complexity">
+              Lvl {{ prompt.complexity }}
+            </div>
+          </div>
+
+          <div class="tags-row" *ngIf="prompt.tags && prompt.tags.length > 0">
+            <span *ngFor="let tag of prompt.tags" class="tag-pill" 
+                  [style.border-left-color]="tag.color || 'var(--primary-color)'">
+              {{ tag.name }}
+            </span>
+          </div>
+
+          <p class="card-description">
+            {{ prompt.content | slice:0:120 }}{{ prompt.content.length > 120 ? '...' : '' }}
+          </p>
+        </div>
+
+        <div class="card-footer">
+          <div class="stat-item">
+            <span class="stat-icon">👁️</span>
+            <span>{{ prompt.view_count || 0 }} views</span>
+          </div>
+          <div class="stat-item date">
+            <span>{{ prompt.created_at | date:'MMM d, y' }}</span>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="filteredPrompts().length === 0" class="empty-state">
+    <div class="empty-icon">📂</div>
+    <h3>No prompts found</h3>
+    <p>Try adjusting your search or filters.</p>
   </div>
 </div>

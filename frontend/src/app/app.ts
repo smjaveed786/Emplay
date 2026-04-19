@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet, RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from './services/auth.service';
-import { ThemeService } from './services/theme.service';
+import { ThemeService, THEME_COLORS, ThemeColor } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +16,9 @@ export class App {
   themeService = inject(ThemeService);
   router = inject(Router);
 
+  themeColors = THEME_COLORS;
+  isColorMenuOpen = signal<boolean>(false);
+
   logout(): void {
     this.authService.logout().subscribe({
       next: () => {
@@ -26,5 +29,14 @@ export class App {
 
   toggleTheme(): void {
     this.themeService.toggleTheme();
+  }
+
+  toggleColorMenu(): void {
+    this.isColorMenuOpen.update(v => !v);
+  }
+
+  setPrimaryColor(color: ThemeColor): void {
+    this.themeService.setPrimaryColor(color);
+    this.isColorMenuOpen.set(false);
   }
 }
