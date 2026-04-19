@@ -25,8 +25,6 @@ def prompt_list(request):
         return JsonResponse(data, safe=False)
 
     elif request.method == "POST":
-        if not request.user.is_authenticated:
-            return JsonResponse({"error": "Authentication required"}, status=401)
         try:
             data = json.loads(request.body)
             title = data.get("title")
@@ -44,7 +42,9 @@ def prompt_list(request):
 
             if errors: return JsonResponse({"errors": errors}, status=400)
 
-            prompt = Prompt.objects.create(title=title, content=content, complexity=complexity, author=request.user)
+            # Safely handle author for guest mode
+            author = request.user if request.user.is_authenticated else None
+            prompt = Prompt.objects.create(title=title, content=content, complexity=complexity, author=author)
             
             # Handle tags
             for name in tag_names:
@@ -87,12 +87,8 @@ def prompt_detail(request, pk):
             return JsonResponse({"error": "Not found"}, status=404)
             
     elif request.method == "PUT":
-        if not request.user.is_authenticated:
-            return JsonResponse({"error": "Authentication required"}, status=401)
         try:
             prompt = Prompt.objects.get(pk=pk)
-            if prompt.author_id and prompt.author_id != request.user.id:
-                return JsonResponse({"error": "Forbidden"}, status=403)
             data = json.loads(request.body)
             prompt.title = data.get("title", prompt.title)
             prompt.content = data.get("content", prompt.content)
@@ -113,12 +109,8 @@ def prompt_detail(request, pk):
             return JsonResponse({"error": str(e)}, status=400)
 
     elif request.method == "DELETE":
-        if not request.user.is_authenticated:
-            return JsonResponse({"error": "Authentication required"}, status=401)
         try:
             prompt = Prompt.objects.get(pk=pk)
-            if prompt.author_id and prompt.author_id != request.user.id:
-                return JsonResponse({"error": "Forbidden"}, status=403)
             prompt.delete()
             return JsonResponse({"message": "Deleted successfully"})
         except Prompt.DoesNotExist:

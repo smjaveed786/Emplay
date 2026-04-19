@@ -1,7 +1,7 @@
 <div class="container" *ngIf="prompt()">
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
     <a routerLink="/prompts" class="btn-back" style="margin-bottom: 0;">← Back to List</a>
-    <div class="actions" *ngIf="authService.currentUser()?.authenticated && prompt()?.author_id === authService.currentUser()?.id">
+    <div class="actions">
       <a [routerLink]="['/edit-prompt', prompt()?.id]" class="btn-edit" style="background: var(--primary-color); color: white; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; margin-right: 1rem; font-weight: bold;">Edit</a>
       <button (click)="deletePrompt()" class="btn-delete" style="background: #ef4444; color: white; padding: 0.6rem 1.2rem; border-radius: 8px; border: none; font-weight: bold; cursor: pointer;">Delete</button>
     </div>
