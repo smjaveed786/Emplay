@@ -1,6 +1,6 @@
 <div class="app-container">
   <!-- Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" *ngIf="!isAuthRoute">
     <div class="sidebar-header">
       <a routerLink="/" class="sidebar-brand">
         <span class="brand-icon">
@@ -46,9 +46,9 @@
   </aside>
 
   <!-- Main Area -->
-  <div class="main-wrapper">
+  <div class="main-wrapper" [class.full-width]="isAuthRoute">
     <!-- Top Global Bar -->
-    <header class="topbar">
+    <header class="topbar" *ngIf="!isAuthRoute">
       <div class="topbar-left">
         <div class="breadcrumb">
           <span class="breadcrumb-item">Library</span>

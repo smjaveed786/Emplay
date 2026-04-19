@@ -29,10 +29,18 @@
         </div>
       </div>
 
-      <button type="submit" [disabled]="signupForm.invalid || isLoading" class="btn-primary-action">
-        <span *ngIf="!isLoading">Create Account</span>
-        <span *ngIf="isLoading" class="spinner-text">Creating Account...</span>
-      </button>
+      <div class="auth-actions">
+        <button type="submit" [disabled]="signupForm.invalid || isLoading" class="btn-primary-action">
+          <span *ngIf="!isLoading">Create Account</span>
+          <span *ngIf="isLoading" class="spinner-text">Creating Account...</span>
+        </button>
+
+        <div class="divider">
+          <span>or</span>
+        </div>
+
+        <a routerLink="/prompts" class="btn-secondary-action">Continue as Guest</a>
+      </div>
     </form>
     
     <div class="footer-note">

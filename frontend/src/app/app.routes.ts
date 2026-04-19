@@ -21,7 +21,7 @@ const authGuard = () => {
 };
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'prompts', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'prompts', component: PromptListComponent },
   { path: 'prompts/:id', component: PromptDetailComponent },
   { path: 'add-prompt', component: AddPromptComponent, canActivate: [authGuard] },

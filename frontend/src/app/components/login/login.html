@@ -18,10 +18,18 @@
         <input type="password" id="password" formControlName="password" placeholder="Enter your password" [readonly]="isLoading">
       </div>
 
-      <button type="submit" [disabled]="loginForm.invalid || isLoading" class="btn-primary-action">
-        <span *ngIf="!isLoading">Sign In</span>
-        <span *ngIf="isLoading" class="spinner-text">Signing in...</span>
-      </button>
+      <div class="auth-actions">
+        <button type="submit" [disabled]="loginForm.invalid || isLoading" class="btn-primary-action">
+          <span *ngIf="!isLoading">Sign In</span>
+          <span *ngIf="isLoading" class="spinner-text">Signing in...</span>
+        </button>
+        
+        <div class="divider">
+          <span>or</span>
+        </div>
+
+        <a routerLink="/prompts" class="btn-secondary-action">Continue as Guest</a>
+      </div>
     </form>
     
     <div class="footer-note">

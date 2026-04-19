@@ -2,31 +2,35 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 85vh;
+  min-height: calc(100vh - 100px);
 }
 
 .signup-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--card-border);
-  padding: 3.5rem;
-  border-radius: 24px;
+  background-color: var(--sidebar-bg);
+  border: 1px solid var(--border-color);
+  padding: 4rem 3rem;
+  border-radius: 32px;
   width: 100%;
   max-width: 500px;
   text-align: center;
-  box-shadow: var(--shadow);
-  transition: var(--transition);
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 h2 {
-  font-size: 2.2rem;
-  margin-bottom: 0.75rem;
+  font-size: 2.25rem;
+  margin-bottom: 0.5rem;
   font-weight: 800;
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 .subtitle {
-  color: var(--text-muted);
+  color: var(--text-secondary);
   margin-bottom: 2.5rem;
   font-size: 1rem;
 }
@@ -39,64 +43,108 @@ h2 {
 label {
   display: block;
   margin-bottom: 0.75rem;
-  color: var(--text-color);
-  font-size: 0.95rem;
+  color: var(--text-primary);
+  font-size: 0.9rem;
   font-weight: 700;
 }
 
 input {
   width: 100%;
   padding: 1rem 1.25rem;
-  background: var(--input-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 12px;
-  color: var(--text-color);
-  font-size: 1.05rem;
-  transition: var(--transition);
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: var(--transition-fast);
 }
 
 input:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 5px rgba(99, 102, 241, 0.15);
-  background: var(--card-bg);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
 .btn-primary-action {
   width: 100%;
-  padding: 1.25rem;
-  background: var(--primary-color);
+  padding: 1.1rem;
+  background: var(--primary-gradient);
   border: none;
-  border-radius: 14px;
+  border-radius: 16px;
   color: white;
-  font-weight: 800;
-  font-size: 1.15rem;
+  font-weight: 700;
+  font-size: 1.1rem;
   cursor: pointer;
-  transition: var(--transition);
-  margin-top: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  transition: var(--transition-smooth);
+  margin-top: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
 }
 
 .btn-primary-action:hover:not(:disabled) {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 15px 20px -3px rgba(99, 102, 241, 0.4);
 }
 
 .btn-primary-action:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  filter: grayscale(1);
+}
+
+.auth-actions {
+  margin-top: 1.5rem;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.divider::before, .divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: var(--border-color);
+}
+
+.divider span {
+  padding: 0 1rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.btn-secondary-action {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.btn-secondary-action:hover {
+  background-color: var(--tag-bg);
+  border-color: var(--primary-color);
 }
 
 .error-banner {
   background: #fee2e2;
-  border-left: 5px solid #ef4444;
+  border: 1px solid #fecaca;
   color: #b91c1c;
   padding: 1rem;
-  border-radius: 10px;
+  border-radius: 12px;
   margin-bottom: 2rem;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   text-align: left;
 }
@@ -105,27 +153,28 @@ input:focus {
   color: #ef4444;
   font-size: 0.8rem;
   margin-top: 0.5rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .footer-note {
   margin-top: 2.5rem;
   font-size: 0.95rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .footer-note a {
   color: var(--primary-color);
+  font-weight: 700;
   text-decoration: none;
-  font-weight: 800;
 }
 
 .footer-note a:hover {
-  text-decoration: underline;
+  color: var(--primary-hover);
 }
 
-.spinner-text {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
+@media (max-width: 480px) {
+  .signup-card {
+    padding: 2.5rem 1.5rem;
+    border-radius: 24px;
+  }
 }

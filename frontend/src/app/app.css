@@ -109,6 +109,10 @@
   flex-direction: column;
 }
 
+.main-wrapper.full-width {
+  margin-left: 0;
+}
+
 .topbar {
   height: 70px;
   background-color: var(--topbar-bg);

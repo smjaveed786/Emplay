@@ -19,10 +19,14 @@ export class App {
   themeColors = THEME_COLORS;
   isColorMenuOpen = signal<boolean>(false);
 
+  get isAuthRoute(): boolean {
+    return this.router.url === '/login' || this.router.url === '/signup';
+  }
+
   logout(): void {
     this.authService.logout().subscribe({
       next: () => {
-        this.router.navigate(['/prompts']);
+        this.router.navigate(['/login']);
       }
     });
   }
