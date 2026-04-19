@@ -1,6 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, of, delay, tap } from 'rxjs';
 
 export interface User {
   id: number;
@@ -12,51 +11,41 @@ export interface User {
   providedIn: 'root'
 })
 export class AuthService {
-  private loginUrl = '/api/login/';
-  private logoutUrl = '/api/logout/';
-  private signupUrl = '/api/signup/';
-  private userUrl = '/api/user/';
-
-  // Global user state
+  // Global user state (mocked)
   currentUser = signal<User | null>(null);
 
-  constructor(private http: HttpClient) { 
+  constructor() { 
     this.checkAuth().subscribe();
   }
 
-  login(credentials: any): Observable<any> {
-    return this.http.post<any>(this.loginUrl, credentials).pipe(
-      tap(user => {
-        this.currentUser.set({ ...user, authenticated: true });
-      })
+  login(credentials: { username: string }): Observable<User> {
+    // Mock login model simulation
+    const mockUser: User = { id: Date.now(), username: credentials.username, authenticated: true };
+    return of(mockUser).pipe(
+      delay(800), // Simulate network delay
+      tap(user => this.currentUser.set(user))
     );
   }
 
-  signup(credentials: any): Observable<any> {
-    return this.http.post<any>(this.signupUrl, credentials).pipe(
-      tap(user => {
-        this.currentUser.set({ ...user, authenticated: true });
-      })
+  signup(credentials: { username: string }): Observable<User> {
+    // Mock signup model simulation
+    const mockUser: User = { id: Date.now(), username: credentials.username, authenticated: true };
+    return of(mockUser).pipe(
+      delay(1200), // Simulate network delay
+      tap(user => this.currentUser.set(user))
     );
   }
 
-  logout(): Observable<any> {
-    return this.http.post<any>(this.logoutUrl, {}).pipe(
-      tap(() => {
-        this.currentUser.set(null);
-      })
+  logout(): Observable<null> {
+    // Mock logout
+    return of(null).pipe(
+      delay(300),
+      tap(() => this.currentUser.set(null))
     );
   }
 
-  checkAuth(): Observable<User> {
-    return this.http.get<User>(this.userUrl).pipe(
-      tap(user => {
-        if (user.authenticated) {
-          this.currentUser.set(user);
-        } else {
-          this.currentUser.set(null);
-        }
-      })
-    );
+  checkAuth(): Observable<User | null> {
+    // Mock auth check (initially null unless we implemented localStorage)
+    return of(null);
   }
 }
